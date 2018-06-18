@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="481.0" prefWidth="769.0"
+            xmlns="http://javafx.com/javafx/8.0.121"
+            fx:controller="com.mikhail.pravilov.mit.controller.SetUpConfigurationScene">
+    <children>
+        <VBox layoutX="9.0" layoutY="10.0" prefHeight="464.0" prefWidth="753.0">
+            <children>
+                <VBox fx:id="serverArchitectureTypes" prefHeight="62.0" prefWidth="567.0">
+                    <children>
+                        <Label text="Server Architecture"/>
+                        <RadioButton fx:id="oneThreadRadioButton" mnemonicParsing="false"
+                                     onMouseClicked="#OneThreadRadioButtonClicked" selected="true"
+                                     text="Only one thread on client">
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="multiThreadingRadioButton" mnemonicParsing="false"
+                                     onMouseClicked="#MultiThreadingRadioButtonClicked"
+                                     text="Thread for reading, thread for writing and thread pool for calculating tasks">
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="unblockingRadioButton" mnemonicParsing="false"
+                                     onMouseClicked="#UnblockingRadioButtonClicked"
+                                     text="Unblocking server with TreadPool for tasks on Selectors API">
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </RadioButton>
+                    </children>
+                </VBox>
+                <SplitPane dividerPositions="0.4557165861513688" prefHeight="65.0" prefWidth="623.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <children>
+                                <Label layoutX="14.0" layoutY="24.0" text="Number of requests by one client"/>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <children>
+                                <TextField fx:id="numberOfRequests" layoutX="14.0" layoutY="19.0" text="10"/>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+                <HBox prefHeight="37.0" prefWidth="753.0">
+                    <children>
+                        <Label text="Changing parameter"/>
+                        <RadioButton fx:id="numberOfElementsRadioButton" mnemonicParsing="false"
+                                     onMouseClicked="#NumberOfElementsRadioButtonClicked" selected="true"
+                                     text="Number of elements in array"/>
+                        <RadioButton fx:id="numberOfClientsRadioButton" mnemonicParsing="false"
+                                     onMouseClicked="#NumberOfClientsRadioButtonClicked" text="Number of clients"/>
+                        <RadioButton fx:id="timeBetweenRequestsRadioButton" mnemonicParsing="false"
+                                     onMouseClicked="#TimeBetweenRequestsRadioButtonClicked"
+                                     text="Time between requests"/>
+                    </children>
+                </HBox>
+                <HBox prefHeight="43.0" prefWidth="753.0">
+                    <children>
+                        <Label text="From"/>
+                        <TextField fx:id="fromBoundTextField" text="1"/>
+                        <Label text="To"/>
+                        <TextField fx:id="toBoundTextField" text="100"/>
+                        <Label text="Step"/>
+                        <TextField fx:id="stepTextField" text="100"/>
+                    </children>
+                </HBox>
+                <HBox prefHeight="28.0" prefWidth="753.0">
+                    <children>
+                        <Label text="Number of elements in array"/>
+                        <TextField fx:id="numberOfElementsTextField" disable="true"/>
+                    </children>
+                </HBox>
+                <HBox prefHeight="28.0" prefWidth="753.0">
+                    <children>
+                        <Label text="Number of clients"/>
+                        <TextField fx:id="numberOfClientsTextField" text="10"/>
+                    </children>
+                </HBox>
+                <HBox prefHeight="28.0" prefWidth="753.0">
+                    <children>
+                        <Label text="Time between requests"/>
+                        <TextField fx:id="timeBetweenRequestsTextField" text="10"/>
+                    </children>
+                </HBox>
+                <Button mnemonicParsing="false" onMouseClicked="#GoButtonMouseClicked" text="Go"/>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

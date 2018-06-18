@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+package testConfiguration;
+
+option java_package = "com.mikhail.pravilov.mit.model.statistic";
+option java_outer_classname = "SortArrayProtos";
+
+message SortArray {
+    repeated int64 number = 1;
+}

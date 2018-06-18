@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package testConfiguration;
+
+option java_package = "com.mikhail.pravilov.mit.model.statistic";
+option java_outer_classname = "TestConfigurationProtos";
+
+message TestConfiguration {
+    required ChangingParameter changing_parameter = 1;
+    required int64 number_of_requests = 2;
+    required int64 number_of_elements = 3;
+    required int64 number_of_clients = 4;
+    required int64 time_between_requests = 5;
+    required int64 changing_step = 6;
+    required int64 from_bound = 7;
+    required int64 to_bound = 8;
+
+    enum ChangingParameter {
+        NUMBER_OF_ELEMENTS = 0;
+        NUMBER_OF_CLIENTS = 1;
+        TIME_BETWEEN_REQUESTS = 2;
+    }
+}

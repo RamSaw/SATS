@@ -1,0 +1,17 @@
+===PARAMETERS===
+Server type: ONE_THREAD
+Number of clients: 1
+Number of requests: 3
+Number of elements: 400
+Number of time between requests: 10
+Changing parameter: NUMBER_OF_CLIENTS
+From: 1
+To: 100
+
+===VALUES===
+PARAMETER -> TIME
+1 34.0
+81 333.2633744855967
+21 85.85714285714286
+41 203.03252032520325
+61 297.95081967213116

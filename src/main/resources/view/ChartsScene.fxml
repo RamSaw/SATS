@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="828.0" prefWidth="1047.0"
+            xmlns="http://javafx.com/javafx/8.0.121">
+    <children>
+        <LineChart fx:id="requestTime" layoutX="14.0" layoutY="14.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT"/>
+            </yAxis>
+        </LineChart>
+        <LineChart fx:id="processClientTime" layoutX="514.0" layoutY="14.0" prefWidth="500.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT"/>
+            </yAxis>
+        </LineChart>
+        <LineChart fx:id="averageOneRequestTime" layoutX="274.0" layoutY="403.0" prefWidth="500.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT"/>
+            </yAxis>
+        </LineChart>
+    </children>
+</AnchorPane>
