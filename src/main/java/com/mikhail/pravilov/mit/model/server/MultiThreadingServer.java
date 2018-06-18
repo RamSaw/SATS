@@ -47,30 +47,19 @@ class MultiThreadingServer extends Server {
                         isTestConfigurationRequest = true;
                         break;
                     } else {
-                        processRequest(messageSize);
+                        processRequest(messageSize, startTime);
                     }
-                    /*
-                    long stopTime = System.currentTimeMillis();
-                    long elapsedTime = stopTime - startTime;
-                    synchronized (testResults) {
-                        testResults.addClientTime(elapsedTime);
-                    }
-                    */
                     executedRequests++;
                 }
                 if (!isTestConfigurationRequest) {
-                    synchronized (testResults) {
-                        testResults.addRequestTime(dataInputStream.readLong());
-                    }
+                    testResults.addRequestTime(dataInputStream.readLong());
                 }
-                // closeClientConnection();
             } catch (IOException e) {
                 System.err.println("Cannot write or read to client, error: " + e.getLocalizedMessage());
             }
         }
 
-        @Override
-        void processRequest(long messageSize) throws IOException {
+        void processRequest(long messageSize, long startClientTime) throws IOException {
             SortArrayProtos.SortArray arrayToSortMessage = SortArrayProtos.SortArray.parseFrom(new BoundedInputStream(dataInputStream, messageSize));
             sortingThreads.submit(() -> {
                 long[] arrayToSort = new long[arrayToSortMessage.getNumberCount()];
@@ -83,46 +72,30 @@ class MultiThreadingServer extends Server {
                 ServerUtils.bubbleSort(arrayToSort);
                 long stopTime = System.currentTimeMillis();
                 long elapsedTime = stopTime - startTime;
-                synchronized (testResults) {
-                    testResults.addSortTime(elapsedTime);
-                }
+                testResults.addSortTime(elapsedTime);
 
                 List<Long> sortedList = new LinkedList<>();
                 for (long number : arrayToSort) {
                     sortedList.add(number);
                 }
-                SortArrayProtos.SortArray sortedArrayMessage = arrayToSortMessage.toBuilder().clearNumber().addAllNumber(sortedList).build();
-                try {
-                    dataOutputStream.writeLong(sortedArrayMessage.getSerializedSize());
-                    sortedArrayMessage.writeTo(dataOutputStream);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                /*
+
                 responseWriter.submit(() -> {
                     SortArrayProtos.SortArray sortedArrayMessage = arrayToSortMessage.toBuilder().clearNumber().addAllNumber(sortedList).build();
                     try {
                         dataOutputStream.writeLong(sortedArrayMessage.getSerializedSize());
                         sortedArrayMessage.writeTo(dataOutputStream);
+                        long stopClientTime = System.currentTimeMillis();
+                        long elapsedClientTime = stopClientTime - startClientTime;
+                        testResults.addClientTime(elapsedClientTime);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
-                */
             });
         }
 
-        @Override
         void sendTestConfiguration() {
             sortingThreads.submit(() -> {
-                TestConfigurationProtos.TestConfiguration testConfigurationMessage = TestConfiguration.getTestConfigurationMessage(testConfiguration);
-                try {
-                    dataOutputStream.writeLong(testConfigurationMessage.getSerializedSize());
-                    testConfigurationMessage.writeTo(dataOutputStream);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                /*
                 TestConfigurationProtos.TestConfiguration testConfigurationMessage = TestConfiguration.getTestConfigurationMessage(testConfiguration);
                 responseWriter.submit(() -> {
                     try {
@@ -132,22 +105,7 @@ class MultiThreadingServer extends Server {
                         e.printStackTrace();
                     }
                 });
-                */
             });
-        }
-
-
-        void closeClientConnection() {
-            // seems like no need to wait because all must be sent
-            /*
-            responseWriter.shutdown();
-            try {
-                responseWriter.awaitTermination(60, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                throw new IllegalStateException("Response is writing too long", e);
-            }
-            super.closeClientConnection();
-            */
         }
     }
 }

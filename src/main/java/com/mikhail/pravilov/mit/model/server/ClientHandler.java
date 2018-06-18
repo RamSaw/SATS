@@ -20,20 +20,14 @@ abstract class ClientHandler implements Runnable {
     final DataOutputStream dataOutputStream;
     final TestConfiguration testConfiguration;
     final TestResults testResults;
-    final Socket clientSocket;
 
     ClientHandler(@NotNull Socket clientSocket, @NotNull TestConfiguration testConfiguration, @NotNull TestResults testResults) throws IOException {
         dataInputStream = new DataInputStream(clientSocket.getInputStream());
         dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-        this.clientSocket = clientSocket;
         this.testConfiguration = testConfiguration;
         this.testResults = testResults;
     }
 
     @Override
     public abstract void run();
-
-    abstract void processRequest(long messageSize) throws IOException;
-
-    abstract void sendTestConfiguration() throws IOException;
 }

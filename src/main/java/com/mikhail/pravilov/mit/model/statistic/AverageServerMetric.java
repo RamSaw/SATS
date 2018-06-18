@@ -38,7 +38,8 @@ class AverageServerMetric extends Metric {
         }
     }
 
-    void addMetricValue(long metricValue) {
+    @Override
+    synchronized void addMetricValue(long metricValue) {
         totalSum += metricValue;
         accepted++;
         if (accepted == neededToBeAccept) {

@@ -1,17 +1,17 @@
 ===PARAMETERS===
-Server type: ONE_THREAD
-Number of clients: 1
-Number of requests: 3
-Number of elements: 400
-Number of time between requests: 10
-Changing parameter: NUMBER_OF_CLIENTS
+Server type: MULTITHREADING
+Number of clients: 10
+Number of requests: 10
+Number of elements: 1000
+Number of time between requests: 1
+Changing parameter: TIME_BETWEEN_REQUESTS
 From: 1
-To: 100
+To: 500
 
 ===VALUES===
 PARAMETER -> TIME
-1 86.33333333333333
-81 371.86008230452677
-21 127.9047619047619
-41 242.85365853658536
-61 345.0109289617486
+1 86.88
+401 443.36
+101 143.52
+201 238.95
+301 341.57

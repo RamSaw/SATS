@@ -47,23 +47,17 @@ class OneThreadServer extends Server {
                     }
                     long stopTime = System.currentTimeMillis();
                     long elapsedTime = stopTime - startTime;
-                    synchronized (testResults) {
-                        testResults.addClientTime(elapsedTime);
-                    }
+                    testResults.addClientTime(elapsedTime);
                     executedRequests++;
                 }
                 if (!isTestConfigurationRequest) {
-                    synchronized (testResults) {
-                        testResults.addRequestTime(dataInputStream.readLong());
-                    }
+                    testResults.addRequestTime(dataInputStream.readLong());
                 }
-                clientSocket.close();
             } catch (IOException e) {
                 System.err.println("Cannot write or read to client, error: " + e.getLocalizedMessage());
             }
         }
 
-        @Override
         void processRequest(long messageSize) throws IOException {
             SortArrayProtos.SortArray arrayToSortMessage = SortArrayProtos.SortArray.parseFrom(new BoundedInputStream(dataInputStream, messageSize));
             long[] arrayToSort = new long[arrayToSortMessage.getNumberCount()];
@@ -76,9 +70,7 @@ class OneThreadServer extends Server {
             ServerUtils.bubbleSort(arrayToSort);
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;
-            synchronized (testResults) {
-                testResults.addSortTime(elapsedTime);
-            }
+            testResults.addSortTime(elapsedTime);
 
             List<Long> sortedList = new LinkedList<>();
             for (long number : arrayToSort) {
@@ -89,7 +81,6 @@ class OneThreadServer extends Server {
             sortedArrayMessage.writeTo(dataOutputStream);
         }
 
-        @Override
         void sendTestConfiguration() throws IOException {
             TestConfigurationProtos.TestConfiguration testConfigurationMessage = TestConfiguration.getTestConfigurationMessage(testConfiguration);
             dataOutputStream.writeLong(testConfigurationMessage.getSerializedSize());

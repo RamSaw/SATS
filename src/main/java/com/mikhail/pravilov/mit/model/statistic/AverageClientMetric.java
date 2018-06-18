@@ -39,7 +39,7 @@ class AverageClientMetric extends Metric {
     }
 
     @Override
-    void addMetricValue(long metricValue) {
+    synchronized void addMetricValue(long metricValue) {
         totalSum += metricValue;
         accepted++;
         if (accepted == neededToBeAccept) {
