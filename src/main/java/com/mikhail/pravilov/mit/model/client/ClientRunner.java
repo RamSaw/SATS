@@ -20,6 +20,7 @@ public class ClientRunner {
         dataOutputStream.writeLong(-1);
         TestConfigurationProtos.TestConfiguration testConfigurationMessage =
                 TestConfigurationProtos.TestConfiguration.parseFrom(new BoundedInputStream(dataInputStream, dataInputStream.readLong()));
+        clientRunnerSocket.close();
         TestConfiguration testConfiguration = TestConfiguration.getTestConfiguration(testConfigurationMessage);
 
         int numberOfElements = testConfiguration.getNumberOfElements();
@@ -52,6 +53,5 @@ public class ClientRunner {
                     break;
             }
         }
-        clientRunnerSocket.close();
     }
 }
