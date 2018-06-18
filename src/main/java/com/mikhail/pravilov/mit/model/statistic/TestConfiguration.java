@@ -6,17 +6,19 @@ import com.mikhail.pravilov.mit.model.protocol.TestConfigurationProtos;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import static com.mikhail.pravilov.mit.model.statistic.TestConfiguration.ChangingParameter.*;
+
 public class TestConfiguration {
     @NotNull
     private static final BiMap<ChangingParameter, TestConfigurationProtos.TestConfiguration.ChangingParameter>
             EQUAL_CHANGING_PARAMETERS = HashBiMap.create();
 
     static {
-        EQUAL_CHANGING_PARAMETERS.put(TestConfiguration.ChangingParameter.NUMBER_OF_ELEMENTS,
+        EQUAL_CHANGING_PARAMETERS.put(NUMBER_OF_ELEMENTS,
                 TestConfigurationProtos.TestConfiguration.ChangingParameter.NUMBER_OF_ELEMENTS);
-        EQUAL_CHANGING_PARAMETERS.put(TestConfiguration.ChangingParameter.NUMBER_OF_CLIENTS,
+        EQUAL_CHANGING_PARAMETERS.put(NUMBER_OF_CLIENTS,
                 TestConfigurationProtos.TestConfiguration.ChangingParameter.NUMBER_OF_CLIENTS);
-        EQUAL_CHANGING_PARAMETERS.put(TestConfiguration.ChangingParameter.TIME_BETWEEN_REQUESTS,
+        EQUAL_CHANGING_PARAMETERS.put(TIME_BETWEEN_REQUESTS,
                 TestConfigurationProtos.TestConfiguration.ChangingParameter.TIME_BETWEEN_REQUESTS);
     }
 
@@ -123,6 +125,19 @@ public class TestConfiguration {
 
     public ServerType getServerType() {
         return serverType;
+    }
+
+    public int getTotalNumberOfTests() {
+        int totalNumberOfTests;
+        if (getChangingParameter() != NUMBER_OF_CLIENTS) {
+            totalNumberOfTests = getNumberOfClients() * getNumberOfIterations();
+        } else {
+            totalNumberOfTests = 2 * getNumberOfClients()
+                    + (getNumberOfIterations() - 1) * getChangingStep();
+            totalNumberOfTests *= getNumberOfIterations();
+            totalNumberOfTests /= 2;
+        }
+        return totalNumberOfTests;
     }
 
     public enum ChangingParameter {

@@ -22,7 +22,13 @@ public class ChartsSceneSupplier implements SceneSupplier {
     public ChartsSceneSupplier(TestConfiguration testConfiguration) throws IOException {
         this.testConfiguration = testConfiguration;
         Server server = ServerFactory.getServerByConfiguration(testConfiguration);
-        TestResults testResults = server.test();
+        TestResults testResults;
+        try {
+            testResults = server.test();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return;
+        }
         testResults.saveToFiles();
         drawCharts(testResults);
     }

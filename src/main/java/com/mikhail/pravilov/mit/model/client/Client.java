@@ -44,7 +44,8 @@ public class Client implements Runnable {
                 SortArrayProtos.SortArray arrayToSortMessage = SortArrayProtos.SortArray.newBuilder().addAllNumber(Arrays.asList(arrayToSort)).build();
                 dataOutputStream.writeLong(arrayToSortMessage.getSerializedSize());
                 arrayToSortMessage.writeTo(dataOutputStream);
-                sortArray = SortArrayProtos.SortArray.parseFrom(new BoundedInputStream(dataInputStream, dataInputStream.readLong()));
+                long size = dataInputStream.readLong();
+                sortArray = SortArrayProtos.SortArray.parseFrom(new BoundedInputStream(dataInputStream, size));
             } catch (IOException e) {
                 throw new IllegalStateException("IO problems", e);
             }

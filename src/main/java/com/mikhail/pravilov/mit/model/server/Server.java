@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 abstract public class Server {
-    private final static int PORT = 4444;
+    final static int PORT = 4444;
     final TestConfiguration testConfiguration;
     final TestResults testResults;
 
@@ -19,21 +19,12 @@ abstract public class Server {
         testResults = new TestResults(testConfiguration);
     }
 
-    public TestResults test() throws IOException {
+    public TestResults test() throws IOException, InterruptedException {
         ArrayList<Thread> clientThreads = new ArrayList<>();
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            int totalNumberOfTests;
-            if (testConfiguration.getChangingParameter() != TestConfiguration.ChangingParameter.NUMBER_OF_CLIENTS) {
-                totalNumberOfTests = testConfiguration.getNumberOfClients() * testConfiguration.getNumberOfIterations() + 1;
-            } else {
-                totalNumberOfTests = 2 * testConfiguration.getNumberOfClients()
-                        + (testConfiguration.getNumberOfIterations() - 1) * testConfiguration.getChangingStep();
-                totalNumberOfTests *= testConfiguration.getNumberOfIterations();
-                totalNumberOfTests /= 2;
-                totalNumberOfTests += 1;
-            }
+            int totalNumberOfAcceptedClients = testConfiguration.getTotalNumberOfTests() + 1;
             int currentNumberOfTests = 0;
-            while (!serverSocket.isClosed() && currentNumberOfTests < totalNumberOfTests) {
+            while (!serverSocket.isClosed() && currentNumberOfTests < totalNumberOfAcceptedClients) {
                 Socket clientSocket = serverSocket.accept();
                 currentNumberOfTests++;
                 ClientHandler clientHandler = getNewClientHandler(clientSocket);

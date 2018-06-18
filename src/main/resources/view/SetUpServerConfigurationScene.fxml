@@ -67,7 +67,7 @@
                         <Label text="From"/>
                         <TextField fx:id="fromBoundTextField" text="1"/>
                         <Label text="To"/>
-                        <TextField fx:id="toBoundTextField" text="100"/>
+                        <TextField fx:id="toBoundTextField" text="500"/>
                         <Label text="Step"/>
                         <TextField fx:id="stepTextField" text="100"/>
                     </children>
