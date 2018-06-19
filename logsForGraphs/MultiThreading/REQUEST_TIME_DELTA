@@ -1,0 +1,23 @@
+===PARAMETERS===
+Server type: MULTITHREADING
+Number of clients: 10
+Number of requests: 10
+Number of elements: 500
+Number of time between requests: 1
+Changing parameter: TIME_BETWEEN_REQUESTS
+From: 1
+To: 1001
+
+===VALUES===
+PARAMETER -> TIME
+1 45.09
+401 40.78
+801 30.09
+101 32.71
+501 30.11
+901 42.89
+201 29.89
+601 32.1
+1001 31.06
+301 26.54
+701 41.7

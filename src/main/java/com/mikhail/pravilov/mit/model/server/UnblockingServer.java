@@ -45,7 +45,7 @@ class UnblockingServer extends Server {
     @Override
     public TestResults test() throws IOException, InterruptedException {
         ServerSocketChannel serverSocket = ServerSocketChannel.open();
-        serverSocket.bind(new InetSocketAddress("localhost", PORT));
+        serverSocket.bind(new InetSocketAddress(PORT));
         acceptAndSendTestConfiguration(serverSocket);
         Thread readerThread = new Thread(new Reader());
         Thread writerThread = new Thread(new Writer());
@@ -248,7 +248,6 @@ class UnblockingServer extends Server {
                 synchronized (writeBuffer) {
                     client.write(writeBuffer);
                     if (!writeBuffer.hasRemaining()) {
-                        System.out.println("WROTE");
                         long stopClientTime = System.currentTimeMillis();
                         long elapsedClientTime = stopClientTime - startClientTimeSaved;
                         testResults.addClientTime(elapsedClientTime);

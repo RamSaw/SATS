@@ -1,0 +1,23 @@
+===PARAMETERS===
+Server type: ONE_THREAD
+Number of clients: 10
+Number of requests: 10
+Number of elements: 500
+Number of time between requests: 1
+Changing parameter: TIME_BETWEEN_REQUESTS
+From: 1
+To: 1001
+
+===VALUES===
+PARAMETER -> TIME
+1 61.96
+401 36.67
+801 26.28
+101 34.58
+501 26.56
+901 42.87
+201 29.08
+601 37.46
+1001 34.01
+301 35.96
+701 30.42

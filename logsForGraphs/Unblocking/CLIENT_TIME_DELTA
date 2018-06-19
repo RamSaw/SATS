@@ -1,0 +1,23 @@
+===PARAMETERS===
+Server type: UNBLOCKING
+Number of clients: 10
+Number of requests: 10
+Number of elements: 500
+Number of time between requests: 1
+Changing parameter: TIME_BETWEEN_REQUESTS
+From: 1
+To: 1001
+
+===VALUES===
+PARAMETER -> TIME
+1 15.37
+401 7.28
+801 9.46
+101 6.23
+501 6.9
+901 7.86
+201 7.8
+601 7.08
+1001 6.52
+301 8.99
+701 9.45
