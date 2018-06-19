@@ -6,6 +6,7 @@ import org.apache.commons.io.input.BoundedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Random;
@@ -24,16 +25,17 @@ public class Client implements Runnable {
         this.numberOfElements = numberOfElements;
         this.numberOfRequests = numberOfRequests;
         this.timeBetweenRequests = timeBetweenRequests;
-        socket = new Socket(hostname, port);
+        socket = new Socket(InetAddress.getByName(hostname), port);
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
         dataInputStream = new DataInputStream(socket.getInputStream());
     }
 
     @Override
     public void run() {
-        long startTime = System.currentTimeMillis();
+        long totalTime = 0;
         Random rand = new Random();
         for (int i = 0; i < numberOfRequests; i++) {
+            long startTime = System.currentTimeMillis();
             Long[] arrayToSort = new Long[numberOfElements];
             for (int j = 0; j < numberOfElements; j++) {
                 arrayToSort[j] = rand.nextLong();
@@ -55,16 +57,20 @@ public class Client implements Runnable {
             if (!Arrays.equals(sortedArray, arrayToSort)) {
                 throw new IllegalStateException("Array is not sorted!");
             }
+            long stopTime = System.currentTimeMillis();
+            long elapsedTime = stopTime - startTime;
+            totalTime += elapsedTime;
             try {
                 sleep(timeBetweenRequests);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
         try {
-            dataOutputStream.writeLong(elapsedTime);
+            // TODO: decide what formula
+            // dataOutputStream.writeLong(elapsedTime - numberOfRequests * timeBetweenRequests);
+            // dataOutputStream.writeLong(elapsedTime);
+            dataOutputStream.writeLong(totalTime);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -8,13 +8,14 @@ import org.jetbrains.annotations.NotNull;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class ClientRunner {
     public static void main(@NotNull String[] args) throws IOException, InterruptedException {
         String hostname = args[0];
         int port = Integer.valueOf(args[1]);
-        Socket clientRunnerSocket = new Socket(hostname, port);
+        Socket clientRunnerSocket = new Socket(InetAddress.getByName(hostname), port);
         DataOutputStream dataOutputStream = new DataOutputStream(clientRunnerSocket.getOutputStream());
         DataInputStream dataInputStream = new DataInputStream(clientRunnerSocket.getInputStream());
         dataOutputStream.writeLong(-1);
