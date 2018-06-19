@@ -1,5 +1,5 @@
 ===PARAMETERS===
-Server type: UNBLOCKING
+Server type: ONE_THREAD
 Number of clients: 10
 Number of requests: 10
 Number of elements: 1
@@ -10,8 +10,8 @@ To: 500
 
 ===VALUES===
 PARAMETER -> TIME
-1 53.25
-401 47.76
-101 47.86
-201 47.05
-301 50.06
+1 73.59
+401 70.83
+101 73.03
+201 70.53
+301 71.22
