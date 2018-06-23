@@ -62,22 +62,13 @@ public class Client implements Runnable {
             totalTime += elapsedTime;
             try {
                 sleep(timeBetweenRequests);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ignored) {
             }
         }
         try {
-            // TODO: decide what formula
-            // dataOutputStream.writeLong(elapsedTime - numberOfRequests * timeBetweenRequests);
-            // dataOutputStream.writeLong(elapsedTime);
             dataOutputStream.writeLong(totalTime);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 }

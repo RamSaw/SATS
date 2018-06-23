@@ -3,8 +3,10 @@ package com.mikhail.pravilov.mit.model.statistic;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TestResults {
+    private final AtomicBoolean isError = new AtomicBoolean(false);
     private final AverageServerMetric sortTimeMetric;
     private final AverageServerMetric clientTimeMetric;
     private final AverageClientMetric requestTimeMetric;
@@ -43,5 +45,13 @@ public class TestResults {
         sortTimeMetric.saveToFile(Paths.get("./logs/sortTimeMetric"));
         clientTimeMetric.saveToFile(Paths.get("./logs/clientTimeMetric"));
         requestTimeMetric.saveToFile(Paths.get("./logs/requestTimeMetric"));
+    }
+
+    public AtomicBoolean getIsError() {
+        return isError;
+    }
+
+    public void setIsErrorTrue() {
+        isError.set(true);
     }
 }

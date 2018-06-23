@@ -1,21 +1,17 @@
 ===PARAMETERS===
-Server type: UNBLOCKING
+Server type: MULTITHREADING
 Number of clients: 10
 Number of requests: 10
 Number of elements: 1
 Number of time between requests: 10
 Changing parameter: NUMBER_OF_ELEMENTS
 From: 1
-To: 25000
+To: 500
 
 ===VALUES===
 PARAMETER -> TIME
-1 47.45
-6001 322.51
-12001 1391.0
-18001 2957.27
-24001 4648.82
-3001 128.76
-9001 776.66
-15001 2077.1
-21001 3700.2
+1 76.33
+401 73.36
+101 74.02
+201 72.94
+301 72.7

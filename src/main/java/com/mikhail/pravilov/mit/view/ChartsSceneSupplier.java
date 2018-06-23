@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -26,11 +27,23 @@ public class ChartsSceneSupplier implements SceneSupplier {
         try {
             testResults = server.test();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            showResultsCorruptedAlert();
+            return;
+        }
+        if (testResults.getIsError().get()) {
+            showResultsCorruptedAlert();
             return;
         }
         testResults.saveToFiles();
         drawCharts(testResults);
+    }
+
+    private void showResultsCorruptedAlert() {
+        Alert exceptionAlert = new Alert(Alert.AlertType.ERROR);
+        exceptionAlert.setTitle("Error occurred");
+        exceptionAlert.setHeaderText("Test results might be incorrect");
+        exceptionAlert.setContentText("Error occured during testing");
+        exceptionAlert.showAndWait();
     }
 
     private void drawCharts(@NotNull TestResults testResults) {

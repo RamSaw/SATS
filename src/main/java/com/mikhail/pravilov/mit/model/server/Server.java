@@ -24,7 +24,7 @@ abstract public class Server {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             int totalNumberOfAcceptedClients = testConfiguration.getTotalNumberOfTests() + 1;
             int currentNumberOfTests = 0;
-            while (!serverSocket.isClosed() && currentNumberOfTests < totalNumberOfAcceptedClients) {
+            while (!serverSocket.isClosed() && currentNumberOfTests < totalNumberOfAcceptedClients && !testResults.getIsError().get()) {
                 Socket clientSocket = serverSocket.accept();
                 currentNumberOfTests++;
                 ClientHandler clientHandler = getNewClientHandler(clientSocket);
@@ -37,7 +37,8 @@ abstract public class Server {
             try {
                 clientThread.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                testResults.setIsErrorTrue();
+                break;
             }
         }
         return testResults;

@@ -54,7 +54,7 @@ class UnblockingServer extends Server {
 
         int totalNumberOfTests = testConfiguration.getTotalNumberOfTests();
         int currentNumberOfTests = 0;
-        while (currentNumberOfTests < totalNumberOfTests) {
+        while (currentNumberOfTests < totalNumberOfTests && !testResults.getIsError().get()) {
             acceptClient(serverSocket);
             currentNumberOfTests++;
         }
@@ -103,7 +103,7 @@ class UnblockingServer extends Server {
                         clientHandler.client.configureBlocking(false);
                         clientHandler.client.register(readerSelector, SelectionKey.OP_READ, clientHandler);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        testResults.setIsErrorTrue();
                     }
                 }
                 try {
@@ -119,7 +119,7 @@ class UnblockingServer extends Server {
                         iterator.remove();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    testResults.setIsErrorTrue();
                 }
 
             }
@@ -136,7 +136,7 @@ class UnblockingServer extends Server {
                         clientHandler.client.configureBlocking(false);
                         clientHandler.client.register(writerSelector, SelectionKey.OP_WRITE, clientHandler);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        testResults.setIsErrorTrue();
                     }
                 }
                 try {
@@ -152,7 +152,7 @@ class UnblockingServer extends Server {
                         iterator.remove();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    testResults.setIsErrorTrue();
                 }
 
             }
@@ -210,7 +210,7 @@ class UnblockingServer extends Server {
                         arrayToSortMessage = SortArrayProtos.SortArray.parseFrom(readMessage.toByteArray());
                         readMessage.reset();
                     } catch (InvalidProtocolBufferException e) {
-                        e.printStackTrace();
+                        testResults.setIsErrorTrue();
                         return;
                     }
                     long[] arrayToSort = new long[arrayToSortMessage.getNumberCount()];

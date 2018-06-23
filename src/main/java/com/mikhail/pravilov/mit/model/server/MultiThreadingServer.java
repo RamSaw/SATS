@@ -88,7 +88,7 @@ class MultiThreadingServer extends Server {
                         long elapsedClientTime = stopClientTime - startClientTime;
                         testResults.addClientTime(elapsedClientTime);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        testResults.setIsErrorTrue();
                     }
                 });
             });
@@ -102,7 +102,7 @@ class MultiThreadingServer extends Server {
                         dataOutputStream.writeLong(testConfigurationMessage.getSerializedSize());
                         testConfigurationMessage.writeTo(dataOutputStream);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        testResults.setIsErrorTrue();
                     }
                 });
             });
